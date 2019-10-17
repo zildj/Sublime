@@ -31,6 +31,8 @@ with open('settings.json') as json_file:
             if (key not in limeData.keys()):
                 limeData[key] = tempData[key]
 print(f"Found {len(limeData)} scooters across {len(coords)} locations")
+if not os.path.exists("data"):
+    os.makedirs("data")
 path = os.path.join(os.path.dirname(
     __file__), f'data/{datetime.today().strftime("%Y-%m-%d %H-%M-%S")}.txt')
 with open(path, 'w') as outfile:
