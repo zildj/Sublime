@@ -13,24 +13,26 @@ def getLimes(lat, lon, token):
     if r.status_code is 200:
         data = r.json()['data']['lime']
         for lime in data:
-            output[lime['id']] = lime
+            output[lime["limeFields"]["plate_number"]] = lime
     else:
         print(f"<{r.status_code}> {r.text}")
     print(f"Found {len(output)} scooters at ({lat}, {lon})")
     return output
 
 
+passes = 3
 limeData = {}
 with open('settings.json') as json_file:
     jsonData = json.load(json_file)
     coords = jsonData['coords']
     token = jsonData['token']
-    for coord in coords:
-        tempData = getLimes(coord['lat'], coord['lon'], token)
-        for key in tempData:
-            if (key not in limeData.keys()):
+    for i in range(passes):
+        print(f"Pass {i+1}/{passes}")
+        for coord in coords:
+            tempData = getLimes(coord['lat'], coord['lon'], token)
+            for key in tempData:
                 limeData[key] = tempData[key]
-print(f"Found {len(limeData)} scooters across {len(coords)} locations")
+        print(f"Found {len(limeData)} unique scooters across {len(coords)} locations")
 if not os.path.exists("data"):
     os.makedirs("data")
 path = os.path.join(os.path.dirname(
