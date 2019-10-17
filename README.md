@@ -1,7 +1,9 @@
 # Sublime
 A project for *Introduction to Smart Cities (SSW 599)* at Stevens Institute of Technology  
   
-Uses the https://fluctuo.com/data-flow/ API for tracking Lime scooters in Hoboken, NJ
+Uses the https://fluctuo.com/data-flow/ API for tracking Lime scooters in Hoboken, NJ  
+  
+![alt text](https://raw.githubusercontent.com/zildj/Sublime/master/area.png)
 ## Installation 
 `pip install -r requirements.txt`
 ## Usage  
