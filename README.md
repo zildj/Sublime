@@ -8,7 +8,7 @@ Uses the https://fluctuo.com/data-flow/ API for tracking Lime scooters in Hoboke
 `pip install -r requirements.txt`
 ## Usage  
 1. Get a free API access key from https://flow.fluctuo.com/login
-2. Replace token in `settings.txt`  
+2. Replace token in `settings.json`  
 ```json
 "token": "YOUR TOKEN HERE",
 ```
