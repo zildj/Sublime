@@ -21,4 +21,4 @@ Default rate limits allow for a max of 10 locations every minute
   ]
 ```
 4. run `python sublime.py`
-5. view output data in the appropriate file in `/data/`
+5. view output data in `database.json`
