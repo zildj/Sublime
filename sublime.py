@@ -1,7 +1,6 @@
 import json
 import requests
 from datetime import datetime
-import os.path
 from tinydb import TinyDB, Query
 
 db = TinyDB("database.json")
