@@ -1,6 +1,7 @@
 import json
 import requests
 from datetime import datetime
+import pytz
 from tinydb import TinyDB, Query
 
 db = TinyDB("database.json")
@@ -15,7 +16,7 @@ def getLimes(lat, lon, token):
     if r.status_code is 200:
         data = r.json()['data']['lime']
         for lime in data:
-            lime["fetched_at"] = datetime.now().isoformat()
+            lime["fetched_at"] = datetime.utcnow().replace(tzinfo=pytz.UTC).isoformat()
             output[lime["limeFields"]["plate_number"]] = lime
     else:
         print(f"<{r.status_code}> {r.text}")
@@ -38,6 +39,5 @@ with open('settings.json') as json_file:
         print(
             f"Found {len(limeData)} unique scooters across {len(coords)} locations")
 
-fetchTime = datetime.now().isoformat()
 for scooter in limeData.values():
     db.insert(scooter)
