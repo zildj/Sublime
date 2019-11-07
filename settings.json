@@ -1,5 +1,6 @@
 {
   "token": "YOUR TOKEN HERE",
+  "passes": 1,
   "coords": [
     { "lat": "40.754620", "lon": "-74.034132" },
     { "lat": "40.753813", "lon": "-74.029468" },

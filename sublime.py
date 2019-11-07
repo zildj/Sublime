@@ -2,6 +2,9 @@ import json
 import requests
 from datetime import datetime
 import os.path
+from tinydb import TinyDB, Query
+
+db = TinyDB("database.json")
 
 
 def getLimes(lat, lon, token):
@@ -13,6 +16,7 @@ def getLimes(lat, lon, token):
     if r.status_code is 200:
         data = r.json()['data']['lime']
         for lime in data:
+            lime["fetched_at"] = datetime.now().isoformat()
             output[lime["limeFields"]["plate_number"]] = lime
     else:
         print(f"<{r.status_code}> {r.text}")
@@ -20,22 +24,21 @@ def getLimes(lat, lon, token):
     return output
 
 
-passes = 3
 limeData = {}
 with open('settings.json') as json_file:
     jsonData = json.load(json_file)
     coords = jsonData['coords']
     token = jsonData['token']
+    passes = jsonData['passes']
     for i in range(passes):
         print(f"Pass {i+1}/{passes}")
         for coord in coords:
             tempData = getLimes(coord['lat'], coord['lon'], token)
             for key in tempData:
                 limeData[key] = tempData[key]
-        print(f"Found {len(limeData)} unique scooters across {len(coords)} locations")
-if not os.path.exists("data"):
-    os.makedirs("data")
-path = os.path.join(os.path.dirname(
-    __file__), f'data/{datetime.today().strftime("%Y-%m-%d %H-%M-%S")}.txt')
-with open(path, 'w') as outfile:
-    json.dump(limeData, outfile)
+        print(
+            f"Found {len(limeData)} unique scooters across {len(coords)} locations")
+
+fetchTime = datetime.now().isoformat()
+for scooter in limeData.values():
+    db.insert(scooter)
